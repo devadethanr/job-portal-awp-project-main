@@ -1,3 +1,11 @@
+<?php 
+    require "conn_db.php";
+    $fetch_jobs = "SELECT * FROM `jobs`";
+    $fetch_jobs_r = mysqli_query($conn,$fetch_jobs);
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,6 +27,11 @@
                 border-radius: 0.25rem; /* Rounded corners */
             }
         </style>
+		  <script>
+			if ( window.history.replaceState ) {
+				window.history.replaceState( null, null, window.location.href );
+			}
+		</script>
     </head>
     <body>
     <!-- navbar for options -->
@@ -41,7 +54,7 @@
 
     <!-- side bar for additional -->
 
-        <div class="offcanvas offcanvas-end show text-bg-dark" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+        <div class="offcanvas offcanvas-end  text-bg-dark" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Backdrop with scrolling</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -56,11 +69,11 @@
             <div class="col-md-4 mb-4">
                 <div class="card card-outline-green" style="width: 25rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Add new JOb </h5>
+                        <h5 class="card-title">Add new job </h5>
                         <h6 class="card-subtitle mb-2 text-body-secondary">Try adding </h6>
                         <p class="card-text">New job opening can be added here.</p>
                         <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            Add new JOb
+                            Add new Job
                         </button>
                     </div>
                 </div>
@@ -73,7 +86,7 @@
                         <h5 class="card-title">Remove a job </h5>
                         <h6 class="card-subtitle mb-2 text-body-secondary">Remove jobs </h6>
                         <p class="card-text">Try clicking on remove jobs button.</p>
-                        <button type="button" class="btn btn-outline-dark" data-bs-toggle="rmmodal" data-bs-target="#staticBackdrop">
+                        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#removemodal">
                             Remove jobs
                         </button>
                     </div>
@@ -82,56 +95,30 @@
         </div>
         <hr class="bg-yellow my-4">
 
-        <!-- <hr class="bg-yellow my-4"> -->
-
         <!-- job listings from this admin -->
-
         <div class="container mt-5">
             <h2>Job Listings</h2>
             <div class="row">
+             <?php while($jb_row = mysqli_fetch_array($fetch_jobs_r)) {?>
                 <div class="col-md-4 mb-4">
                     <div class="card bg-warning">
                         <div class="card-body">
-                            <h5 class="card-title">Software Developer</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">ABC Tech Solutions</h6>
-                            <p class="card-text">San Francisco, CA</p>
-                            <p class="card-text">We are looking for a skilled software developer to join our team...</p>
-                            <p class="card-text"><strong>Job Type:</strong> Full Time</p>
-                            <p class="card-text"><strong>Deadline:</strong> August 31, 2023</p>
+                            <h5 class="card-title"><?php echo $jb_row['job_title'];?></h5>
+                            <h6 class="card-subtitle mb-2 text-muted"><?php echo $jb_row['company_name'];?></h6>
+                            <p class="card-text"><?php echo $jb_row['location'];?></p>
+                            <p class="card-text"><?php echo $jb_row['job_description'];?></p>
+                            <p class="card-text"><strong>Job Type: <?php echo $jb_row['job_type'];?></strong></p>
+                            <p class="card-text"><strong>Deadline:</strong><?php echo $jb_row['application_deadline'];?></p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card bg-warning">
-                        <div class="card-body">
-                            <h5 class="card-title">UX Designer</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Design Innovations</h6>
-                            <p class="card-text">New York, NY</p>
-                            <p class="card-text">Join our creative team as a UX designer and help create...</p>
-                            <p class="card-text"><strong>Job Type:</strong> Part Time</p>
-                            <p class="card-text"><strong>Deadline:</strong> September 15, 2023</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card bg-warning">
-                        <div class="card-body">
-                            <h5 class="card-title">Marketing Manager</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Global Marketing Group</h6>
-                            <p class="card-text">London, UK</p>
-                            <p class="card-text">Lead our marketing efforts and drive brand awareness...</p>
-                            <p class="card-text"><strong>Job Type:</strong> Contract</p>
-                            <p class="card-text"><strong>Deadline:</strong> October 10, 2023</p>
-                        </div>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
 
         <!-- modal for adding job -->
-
-        <div class="modal fade modal-dialog-scrollable" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
+        <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Job Details Form</h1>
@@ -169,37 +156,61 @@
                             <label for="applicationDeadline" class="form-label">Application Deadline</label>
                             <input type="date" class="form-control" id="applicationDeadline" name="applicationDeadline" required>
                         </div>
-                    </form>
                 </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Add Job</button>
+                    <!-- <input type="submit" name="add_jb_btn" value="add job"> -->
+                    <button type="submit" name="add_jb_btn" class="btn btn-primary">Add Job</button>
+                    </form>
                 </div>
                 </div>
             </div>
         </div>
+
+        <!-- model for removing jobs  -->
+        <div class="modal fade" id="removemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Remove jobs</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Understood</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>
+
+
 <?php
-
+    require "conn_db.php";
 //job add button and php
-    if(isset($_POST['submit'])){
-
+    if(isset($_POST['add_jb_btn'])){
+        
         $jobTitle = $_POST["jobTitle"];
         $companyName = $_POST["companyName"];
         $location = $_POST["location"];
         $jobDescription = $_POST["jobDescription"];
         $jobType = $_POST["jobType"];
         $applicationDeadline = $_POST["applicationDeadline"];
-//job add query
-        $j_ad = "INSERT INTO 'jobs' ('job_title', 'company_name', 'location', 'job_description', 'job_type', 'application_deadline')
-        VALUES ('$jobTitle', '$companyName', '$location', '$jobDescription', '$jobType', '$applicationDeadline')";
+        //job add query
 
+        $j_ad = "INSERT INTO `jobs`(`job_title`, `company_name`, `location`, `job_description`, `job_type`, `application_deadline`) 
+        VALUES ('$jobTitle','$companyName','$location','$jobDescription','$jobType', '$applicationDeadline')";
+        
         $j_res=mysqli_query($conn,$j_ad);
-        if($j_res){
-            echo "<script> alert('successfully added new job')";
-        }
+        if($j_res){echo "<script> alert('successfully added new job')";}
 
     }
+
+    if(isset($_POST['']))
 ?>
