@@ -65,6 +65,7 @@
         </div>
         </br>
     <!-- card for adding new job -->
+    <center>
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="card card-outline-green" style="width: 25rem;">
@@ -93,6 +94,7 @@
                 </div>
             </div>
         </div>
+        </center>
         <hr class="bg-yellow my-4">
 
         <!-- job listings from this admin -->
