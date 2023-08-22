@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2023 at 06:19 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Aug 22, 2023 at 10:56 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,7 +32,7 @@ CREATE TABLE `admin_login` (
   `password` varchar(255) NOT NULL,
   `role` int(2) NOT NULL,
   `job` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -41,33 +41,21 @@ CREATE TABLE `admin_login` (
 --
 
 CREATE TABLE `jobs` (
+  `jid` int(10) NOT NULL,
   `job_title` varchar(255) NOT NULL,
   `company_name` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
   `job_description` varchar(255) NOT NULL,
   `job_type` varchar(255) NOT NULL,
   `application_deadline` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `jobs`
 --
 
-INSERT INTO `jobs` (`job_title`, `company_name`, `location`, `job_description`, `job_type`, `application_deadline`) VALUES
-('python developer', 'infosys', 'Trivandrum,Kerala', 'wdwa', 'partTime', '2023-08-22'),
-('python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15'),
-('python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15'),
-('python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15'),
-('python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15'),
-('python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15'),
-('python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15'),
-('python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15'),
-('python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15'),
-('python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15'),
-('python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15'),
-('python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15'),
-('python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15'),
-('python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15');
+INSERT INTO `jobs` (`jid`, `job_title`, `company_name`, `location`, `job_description`, `job_type`, `application_deadline`) VALUES
+(2, 'python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15');
 
 -- --------------------------------------------------------
 
@@ -76,18 +64,52 @@ INSERT INTO `jobs` (`job_title`, `company_name`, `location`, `job_description`, 
 --
 
 CREATE TABLE `register` (
+  `uid` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
   `mail` varchar(255) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `role` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `register`
 --
 
-INSERT INTO `register` (`name`, `mail`, `pass`, `role`) VALUES
-('nerfed', 'sarin@kerala.org.in', 'admin', 'ADMIN-JOB REGISTER');
+INSERT INTO `register` (`uid`, `name`, `mail`, `pass`, `role`) VALUES
+(1, 'nerfed', 'sarin@kerala.org.in', 'admin', 'ADMIN-JOB REGISTER'),
+(2, 'chris', 'dennis@gmail.com', 'ASD', 'APPLICANT');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`jid`);
+
+--
+-- Indexes for table `register`
+--
+ALTER TABLE `register`
+  ADD PRIMARY KEY (`uid`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `jid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `register`
+--
+ALTER TABLE `register`
+  MODIFY `uid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
