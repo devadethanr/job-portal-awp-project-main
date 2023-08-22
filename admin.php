@@ -169,7 +169,7 @@
                 </div>
             </div>
         </div>
-
+            
         <!-- model for removing jobs  -->
         <div class="modal fade" id="removemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -178,6 +178,11 @@
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Remove jobs</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <?php 
+                    require "conn_db.php";
+                    $fetch_rm = "SELECT * FROM `jobs`";
+                    $fetch_rm_r = mysqli_query($conn,$fetch_rm);
+                ?>
                 <div class="modal-body">
                     <table class="table table-striped">
                         <thead>
@@ -192,14 +197,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($jb_row = mysqli_fetch_array($fetch_jobs_r)) { ?>
+                            <?php while ($jb_rm = mysqli_fetch_array($fetch_rm_r)) { ?>
                                 <tr>
-                                    <td><?php echo $jb_row['job_title']; ?></td>
-                                    <td><?php echo $jb_row['company_name']; ?></td>
-                                    <td><?php echo $jb_row['location']; ?></td>
-                                    <td><?php echo $jb_row['job_description']; ?></td>
-                                    <td><?php echo $jb_row['job_type']; ?></td>
-                                    <td><?php echo $jb_row['application_deadline']; ?></td>
+                                    <td><?php echo $jb_rm['job_title'];?></td>
+                                    <td><?php echo $jb_rm['company_name']; ?></td>
+                                    <td><?php echo $jb_rm['location']; ?></td>
+                                    <td><?php echo $jb_rm['job_description']; ?></td>
+                                    <td><?php echo $jb_rm['job_type']; ?></td>
+                                    <td><?php echo $jb_rm['application_deadline']; ?></td>
                                     <td>
                                         <button type="button" class="btn btn-danger delete-btn" data-job-id="<?php echo $jb_row['id']; ?>">Delete</button>
                                     </td>
@@ -217,6 +222,7 @@
 
     </body>
 </html>
+
 
 
 <?php
