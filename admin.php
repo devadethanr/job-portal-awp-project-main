@@ -13,7 +13,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>admin</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+                $(".delete-btn").click(function() {
+                    var job_id = $(this).data("job-id");
+                    if (confirm("Are you sure you want to delete this job?")) {
+                        $.ajax({
+                            type: "POST",
+                            url: "delete_job.php",
+                            data: { job_id: job_id },
+                            success: function(response) {
+                                alert(response); // Show the response message
+                                // You might want to refresh the job list or perform other actions here
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+
         <style>
             body {
                 background: hsla(213, 77%, 14%, 1);
@@ -206,7 +229,7 @@
                                     <td><?php echo $jb_rm['job_type']; ?></td>
                                     <td><?php echo $jb_rm['application_deadline']; ?></td>
                                     <td>
-                                        <button type="button" class="btn btn-danger delete-btn" data-job-id="<?php echo $jb_row['id']; ?>">Delete</button>
+                                        <button type="button" class="btn btn-danger delete-btn"  data-job-id="<?php echo $jb_rm['jid']; ?>">Delete</button>
                                     </td>
                                 </tr>
                             <?php } ?>
