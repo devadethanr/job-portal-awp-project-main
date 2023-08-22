@@ -172,18 +172,44 @@
 
         <!-- model for removing jobs  -->
         <div class="modal fade" id="removemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Remove jobs</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Job Title</th>
+                                <th>Company Name</th>
+                                <th>Location</th>
+                                <th>Job Description</th>
+                                <th>Job Type</th>
+                                <th>Deadline</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($jb_row = mysqli_fetch_array($fetch_jobs_r)) { ?>
+                                <tr>
+                                    <td><?php echo $jb_row['job_title']; ?></td>
+                                    <td><?php echo $jb_row['company_name']; ?></td>
+                                    <td><?php echo $jb_row['location']; ?></td>
+                                    <td><?php echo $jb_row['job_description']; ?></td>
+                                    <td><?php echo $jb_row['job_type']; ?></td>
+                                    <td><?php echo $jb_row['application_deadline']; ?></td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger delete-btn" data-job-id="<?php echo $jb_row['id']; ?>">Delete</button>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
                 </div>
                 </div>
             </div>
