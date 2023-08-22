@@ -39,7 +39,7 @@
         </nav>
 
         <!-- available applications -->
-
+        <form method="POST">
         <div class="container mt-5">
             <h2>Jobs available Right now !</h2>
             <div class="row">
@@ -53,12 +53,29 @@
                             <p class="card-text"><?php echo $jb_row['job_description'];?></p>
                             <p class="card-text"><strong>Job Type: <?php echo $jb_row['job_type'];?></strong></p>
                             <p class="card-text"><strong>Deadline:</strong><?php echo $jb_row['application_deadline'];?></p>
+                            <input type="hidden" name="jid" value="<?php echo $jb_row['jid']; ?>">
+                            <button type ="submit" name="ap_btn" class="btn btn-primary apply-btn" >Apply for Job</button>
                         </div>
                     </div>
                 </div>
                 <?php } ?>
             </div>
         </div>
-
+        </form>
     </body>
 </html>
+<?php 
+    session_start();
+    $master=$_SESSION["sid"];
+
+    if(isset($_POST['ap_btn'])){
+        echo "<script>alert('hey');</script>";
+        $jid1=$_POST['jid'];
+        $insert_query = "INSERT INTO `job_applications`(`applicant_id`, `jid`) VALUES ('$master','$jid1')";
+        if (mysqli_query($conn, $insert_query)) {
+            echo "Job application successful";
+        } else {
+            echo "Error applying for job: " . mysqli_error($conn);
+        }
+    }
+?>
