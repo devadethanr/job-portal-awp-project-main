@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 22, 2023 at 10:56 AM
+-- Generation Time: Aug 22, 2023 at 11:23 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -55,7 +55,26 @@ CREATE TABLE `jobs` (
 --
 
 INSERT INTO `jobs` (`jid`, `job_title`, `company_name`, `location`, `job_description`, `job_type`, `application_deadline`) VALUES
-(2, 'python developer', 'infosys', 'Trivandrum,Kerala', 'dwa', 'partTime', '2023-08-15');
+(17, 'ML engineer', 'meta', 'new york', 'ml engineer skilled ', 'fullTime', '2023-08-02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job_applications`
+--
+
+CREATE TABLE `job_applications` (
+  `aid` int(10) NOT NULL,
+  `applicant_id` varchar(255) NOT NULL,
+  `jid` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `job_applications`
+--
+
+INSERT INTO `job_applications` (`aid`, `applicant_id`, `jid`) VALUES
+(1, 'dennis@gmail.com', 17);
 
 -- --------------------------------------------------------
 
@@ -90,6 +109,12 @@ ALTER TABLE `jobs`
   ADD PRIMARY KEY (`jid`);
 
 --
+-- Indexes for table `job_applications`
+--
+ALTER TABLE `job_applications`
+  ADD PRIMARY KEY (`aid`);
+
+--
 -- Indexes for table `register`
 --
 ALTER TABLE `register`
@@ -103,7 +128,13 @@ ALTER TABLE `register`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `jid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `jid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `job_applications`
+--
+ALTER TABLE `job_applications`
+  MODIFY `aid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `register`
